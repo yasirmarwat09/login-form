@@ -1,4 +1,4 @@
-const API_URL = "http://login-form-nine-swart.vercel.app/api";
+const API_URL = "http://login-form-backend-eight.vercel.app/api";
 
 // Toggle between Sign Up and Sign In forms
 function toggleForm() {
