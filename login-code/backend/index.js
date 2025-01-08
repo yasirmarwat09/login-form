@@ -20,7 +20,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Serve Static Files (frontend)
-app.use(express.static(path.join(__dirname, "../frontend"))); // Adjust path to frontend folder
+app.use(express.static(path.join(__dirname, "../"))); // Adjust path to frontend folder
 
 // MongoDB Connection
 mongoose
@@ -107,7 +107,7 @@ app.get("/api/welcome", (req, res) => {
 
 // Default Route for the Frontend
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html")); // Serve index.html from the frontend folder
+  res.sendFile(path.join(__dirname, "../index.html")); // Serve index.html from the frontend folder
 });
 
 app.listen(PORT, () =>
