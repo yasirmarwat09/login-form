@@ -1,5 +1,4 @@
-const API_URL = "https://https://login-form-backend-ivimvqt4o-yasirmarwat09s-projects.vercel.app/api";
-
+const API_URL = "https://login-form-backend-ivimvqt4o-yasirmarwat09s-projects.vercel.app/api"; // Corrected URL
 
 // Toggle between Sign Up and Sign In forms
 function toggleForm() {
@@ -25,14 +24,19 @@ document.getElementById("signup-form").addEventListener("submit", async (e) => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const response = await fetch(`${API_URL}/signup`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, email, password }),
-  });
+  try {
+    const response = await fetch(`${API_URL}/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
 
-  const data = await response.json();
-  alert(data.message || data.error);
+    const data = await response.json();
+    alert(data.message || data.error);
+  } catch (error) {
+    alert("Error in sign up. Please try again.");
+    console.error(error);
+  }
 });
 
 // Sign In Form Submission
@@ -41,26 +45,31 @@ document.getElementById("signin-form").addEventListener("submit", async (e) => {
   const email = document.getElementById("signin-email").value;
   const password = document.getElementById("signin-password").value;
 
-  const response = await fetch(`${API_URL}/signin`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
+  try {
+    const response = await fetch(`${API_URL}/signin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-  const data = await response.json();
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-    alert("Sign-in successful!");
+    const data = await response.json();
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      alert("Sign-in successful!");
 
-    // Display the welcome page
-    displayWelcomePage(data.username);
+      // Display the welcome page
+      displayWelcomePage(data.username);
 
-    // Hide the Sign-In Form and show the Protected Page button
-    document.getElementById("signin-form").style.display = "none";
-    document.getElementById("switch-form-btn").style.display = "none";
-    document.getElementById("get-protected").style.display = "inline";
-  } else {
-    alert(data.error);
+      // Hide the Sign-In Form and show the Protected Page button
+      document.getElementById("signin-form").style.display = "none";
+      document.getElementById("switch-form-btn").style.display = "none";
+      document.getElementById("get-protected").style.display = "inline";
+    } else {
+      alert(data.error);
+    }
+  } catch (error) {
+    alert("Error in sign in. Please try again.");
+    console.error(error);
   }
 });
 
@@ -73,10 +82,15 @@ async function displayWelcomePage(username) {
 // Access the Protected Page (After Sign-In)
 document.getElementById("get-protected").addEventListener("click", async () => {
   const token = localStorage.getItem("token");
-  const response = await fetch(`${API_URL}/protected`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  try {
+    const response = await fetch(`${API_URL}/protected`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-  const data = await response.json();
-  document.getElementById("response").textContent = data.message || data.error;
+    const data = await response.json();
+    document.getElementById("response").textContent = data.message || data.error;
+  } catch (error) {
+    alert("Error accessing protected page. Please try again.");
+    console.error(error);
+  }
 });
