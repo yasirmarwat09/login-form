@@ -1,4 +1,4 @@
-const API_URL = "https://login-form-backend-ivimvqt4o-yasirmarwat09s-projects.vercel.app/api"; // Corrected URL
+const API_URL = "https://willowy-medovik-f52f55.netlify.app/api"; // Corrected URL
 
 // Toggle between Sign Up and Sign In forms
 function toggleForm() {
